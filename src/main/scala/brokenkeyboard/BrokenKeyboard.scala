@@ -6,7 +6,7 @@ object BrokenKeyboard {
   def main(args: Array[String]): Unit = {
     val keys = ArrayBuffer[String]()
     for (_<- 1 to Integer.parseInt(readLine("Enter amount: "))) keys += readLine("Enter keys: ")
-    getWords(keys).foreach(println)
+    for (a <- keys; b <- getWords(keys)) println(s"$a = $b")
   }
 
   def getWords(keys: ArrayBuffer[String]): ArrayBuffer[String] = {
