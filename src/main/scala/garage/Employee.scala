@@ -1,0 +1,1 @@
+class Employee(fname: String, lname: String) {}

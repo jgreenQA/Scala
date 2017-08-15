@@ -1,6 +1,6 @@
 object Basic {
   def main(args: Array[String]): Unit = {
-    println("Hello, world!")
+    /*println("Hello, world!")
 
     val s = "Hello World!"
     println(s)
@@ -30,7 +30,9 @@ object Basic {
 
     println(sumPM(2, 3, true))
 
-    println(swap(List(1, 2)))
+    println(swap(List(1, 2)))*/
+
+    getIDs()
   }
 
   def returnString(): String = "Hello World!"
@@ -94,7 +96,9 @@ object Basic {
 
   def swap(x: List[Int]): List[Int] = x.reverse
 
-  def getIDs(): Unit = {
+  def getIDs(): Array[String] = {
+    java.util.TimeZone.getAvailableIDs.flatMap{_.split("/").filter(_.length > 1).toList}
+
     //List(java.util.TimeZone.getAvailableIDs.foreach(s => s.split("/")))
 
     //for (s <- java.util.TimeZone.getAvailableIDs) println(s.split("/"))
