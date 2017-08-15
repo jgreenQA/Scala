@@ -15,7 +15,7 @@ object BrokenKeyboard {
 
     for (b <- keys) {
       var word = ""
-      for (a <- lines) if (b.sortWith(_<_) contains a.distinct.sortWith(_<_)) if (a.length > word.length) word = a
+      for (a <- lines) if (b.distinct.sortWith(_<_) contains a.distinct.sortWith(_<_)) if (a.length > word.length) word = a
       validWords += word
     }
     validWords
