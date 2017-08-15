@@ -1,6 +1,6 @@
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source.fromFile
-import scala.io.StdIn.{readLine,readInt}
+import scala.io.StdIn.readLine
 
 object BrokenKeyboard {
   def main(args: Array[String]): Unit = {
