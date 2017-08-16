@@ -2,11 +2,11 @@ package cipher
 
 object Atbash {
   def main(args: Array[String]): Unit = {
-    println(cipher("foobar"))
+    println(cipher("wizard"))
   }
 
   def cipher(s: String): String = {
-    val alpha = ('a' to 'z').toList
-    s.toList.map(x => alpha((alpha.length - 1) - alpha.indexOf(x))).mkString
+    val a = ('a' to 'z').toList
+    s.toLowerCase.toList.map(x => if (a.contains(x)) a((a.length - 1) - a.indexOf(x)) else x).mkString
   }
 }

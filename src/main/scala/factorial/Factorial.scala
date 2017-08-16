@@ -2,7 +2,7 @@ package factorial
 
 object Factorial {
   def main(args: Array[String]): Unit = {
-    println(getFactorial(18))
+    println(getFactorial(120))
   }
 
   def getFactorial(a: Int): String = {
