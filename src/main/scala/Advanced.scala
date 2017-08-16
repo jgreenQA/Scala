@@ -4,22 +4,23 @@ import scala.math.min
 
 object Advanced {
   def main(args: Array[String]): Unit = {
-    //getAnagrams
-    //getAnagrams.foreach(println())
+    println(getAnagrams)
 
-    //println(getPrimes(1, 3000000))
-    //println(getPrimes(1, 20000000))
+    println(getPrimes(1, 3000000))
+    println(getPrimes(1, 20000000))
 
     println(commonSubstring("salad", "ladder"))
 
     println(distance("boot", "battle"))
   }
 
-  def getAnagrams: Unit = {
+  def getAnagrams: String = {
+    var (max, maxlen) = ("", 0)
     var words = ArrayBuffer[String]()
     val lines = (for (line <- fromFile("words.txt", "utf-8").getLines()) yield line).toList
-    for (a <- lines; b <- lines) if (b.sortWith(_<_) == a.sortWith(_<_)) words += a
-    words.foreach(println)
+    val anagrams = lines.map(l => (l.toList.sortWith(_<_), l) ).groupBy(x => x._1).map(els => (els._1, els._2.map(_._2))).toList.sortWith( _._2.size > _._2.size)
+    for (s <- anagrams) if (s._2.length > maxlen && s._2.head.length > max.length){ max = s._2.head; maxlen = s._2.length}
+    max
   }
 
   def getPrimes(lower: Int = 1, upper: Int): Int = {
