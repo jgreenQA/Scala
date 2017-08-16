@@ -1,6 +1,6 @@
 import garage.Person
 
-class Employee(fnamein: String, lnamein: String) extends Person(fnamein, lnamein) {
+class Customer(fnamein: String, lnamein: String) extends Person(fnamein, lnamein) {
   super.setFname(fnamein)
   super.setLname(lnamein)
 

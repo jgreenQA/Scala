@@ -32,7 +32,7 @@ object Basic {
 
     println(swap(List(1, 2)))*/
 
-    getIDs()
+    getIDs().foreach(println)
   }
 
   def returnString(): String = "Hello World!"
@@ -97,12 +97,6 @@ object Basic {
   def swap(x: List[Int]): List[Int] = x.reverse
 
   def getIDs(): Array[String] = {
-    java.util.TimeZone.getAvailableIDs.flatMap{_.split("/").filter(_.length > 1).toList}
-
-    //List(java.util.TimeZone.getAvailableIDs.foreach(s => s.split("/")))
-
-    //for (s <- java.util.TimeZone.getAvailableIDs) println(s.split("/"))
-
-    //java.util.TimeZone.getAvailableIDs.filter(_.split("/")).toList
+    java.util.TimeZone.getAvailableIDs.flatMap{_.split("/").filter(_.length > 1).toList.distinct}
   }
 }

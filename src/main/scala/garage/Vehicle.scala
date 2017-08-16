@@ -1,6 +1,6 @@
 class Vehicle(makein: String, modelin: String) {
-  var make = makein
-  var model = modelin
+  var make: String = makein
+  var model: String = modelin
   var bills = 0
 
   def setBill(p: Int): Unit = bills = p
@@ -9,9 +9,11 @@ class Vehicle(makein: String, modelin: String) {
 
   def setModel(m: String): Unit = model = m
 
-  def getBill(): Int = bills
+  def getBill: Int = bills
 
-  def getMake(): String = make
+  def getMake: String = make
 
-  def getModel(): String = model
+  def getModel: String = model
+
+  override def toString: String = s"Make: $make\nModel: $model\nBill: $bills"
 }

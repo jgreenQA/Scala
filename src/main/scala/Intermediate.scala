@@ -14,14 +14,12 @@ object Intermediate {
   }
 
   def uniqueSum(x: Int, y: Int, z: Int): Int = {
-    val a = List(x, y, z)
     var sum = 0
-    a.distinct.foreach(sum += _)
+    List(x, y, z).distinct.foreach(sum += _)
     sum
   }
 
   def tooHot(x: Int, b: Boolean): Boolean = {
-    if (b) x >= 60 && x <= 100
-    else x >= 60 && x <= 90
+    if (b) x >= 60 && x <= 100 else x >= 60 && x <= 90
   }
 }

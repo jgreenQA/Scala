@@ -15,21 +15,26 @@ class Garage {
     isOpen && vehicles.contains(v)
   }
 
+  def removeVehicleByID(id: Int): Boolean = {
+    if (isOpen && vehicles.size < id) vehicles.drop(id)
+    isOpen && vehicles.size < id
+  }
+
   def getVehicleByID(id: Int): Vehicle = vehicles(id)
 
-  def open(): Unit = isOpen = true
+  def open: Unit = isOpen = true
 
-  def close(): Unit = isOpen = false
+  def close: Unit = isOpen = false
 
-  def calcBills(): Int = {
+  def calcBills: Int = {
     var sum = 0
-    vehicles.foreach(sum += _.getBill())
+    vehicles.foreach(sum += _.getBill)
     sum
   }
 
   def fixVehicle(v: Vehicle, p: Int): Unit = if (vehicles.contains(v)) v.setBill(p)
 
-  def printContents(): Unit = vehicles.foreach(println)
+  def printContents: Unit = vehicles.foreach(println)
 
 
 
