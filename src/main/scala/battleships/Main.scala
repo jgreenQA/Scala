@@ -6,13 +6,11 @@ import scala.util.Random
 object Main {
   def main(args: Array[String]): Unit = {
     val SIZE: Int = 10
-    var playerHasLost = false
-    var playerHasAnotherShot = false
-    var ship = null
-    var direction = null
-    var x = 0
-    var y = 0
-    var winner = ""
+    var playerHasLost: Boolean = false
+    var playerHasAnotherShot: Boolean = false
+    var x: Int = 0
+    var y: Int = 0
+    var winner: String = ""
 
     println("-- SETUP --\n")
 
@@ -26,7 +24,7 @@ object Main {
     p2PlaceShips(p2)
 
     while (!playerHasLost) {
-      p1.printGrid
+      p1.printGrid()
       playerHasAnotherShot = true
       println(s"${p1.getName}'s turn!")
 
@@ -70,15 +68,15 @@ object Main {
 
   def p1PlaceShips(p1: Player): Unit = {
     while (p1.getTotalShipsRemaining() != 0) {
-      p1.printGrid
+      p1.printGrid()
       println(s"\nPatrol Boats: $p1.getPatrolBoatsRemaining\nBattleships: $p1.getBattleshipsRemaining" +
         s"\nSubmarines: $p1.getSubmarinesRemaining\nDestroyers: $p1.getDestroyersRemaining" +
         s"\nCarriers: $p1.getCarriersRemaining")
 
-      ship        = readLine("Enter the ship you want to place: ")
-      x           = Integer.parseInt(readLine("x: "))
-      y           = Integer.parseInt(readLine("y: "))
-      direction   = readLine("direction: ")
+      val ship        = readLine("Enter the ship you want to place: ")
+      val x           = Integer.parseInt(readLine("x: "))
+      val y           = Integer.parseInt(readLine("y: "))
+      val direction   = readLine("direction: ")
 
       if (!p1.placeShip(ship, x, y, direction)) println("Cannot place ship")
     }
