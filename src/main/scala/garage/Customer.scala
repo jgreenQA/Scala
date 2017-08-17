@@ -1,4 +1,4 @@
-import garage.Person
+package garage
 
 class Customer(fnamein: String, lnamein: String) extends Person(fnamein, lnamein) {
   super.setFname(fnamein)

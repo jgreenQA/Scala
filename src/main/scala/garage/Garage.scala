@@ -1,6 +1,8 @@
+package garage
+
 import scala.collection.mutable.ListBuffer
 
-class Garage {
+class Garage() {
   private val vehicles = ListBuffer[Vehicle]()
   private val employees = ListBuffer[Employee]()
   private var isOpen = false
@@ -32,11 +34,16 @@ class Garage {
     sum
   }
 
-  def fixVehicle(v: Vehicle, p: Int): Unit = if (vehicles.contains(v)) v.setBill(p)
+  def fixVehicle(v: Vehicle): Double = {
+    var t = 0
+    if (vehicles.contains(v)) {
+      t = v.getTotalCost
+      v.setFixed()
+    }
+    t
+  }
 
-  def printContents: Unit = vehicles.foreach(println)
-
-
+  def printContents(): Unit = vehicles.foreach(println)
 
   def addEmployee(e: Employee): Unit = employees += e
 
