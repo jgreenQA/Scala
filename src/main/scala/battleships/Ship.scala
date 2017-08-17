@@ -16,6 +16,4 @@ object Ship {
   case object SUBMARINE  extends Ship("submarine", 1, 3)
   case object DESTROYER  extends Ship("destroyer", 1, 4)
   case object CARRIER    extends Ship("carrier", 1, 5)
-
-  val ships: Set[Ship] = sealedInstancesOf[Ship]
 }

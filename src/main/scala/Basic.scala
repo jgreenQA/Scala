@@ -1,3 +1,5 @@
+import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position
+
 object Basic {
   def main(args: Array[String]): Unit = {
     /*println("Hello, world!")
@@ -37,60 +39,60 @@ object Basic {
 
   def returnString(): String = "Hello World!"
 
-  def typeInference(x: Any): Unit = println(x)
+  def typeInference(variable: Any): Unit = println(variable)
 
-  def endOfString(s: String, i: Int): String = s.substring(i - 1)
+  def endOfString(string: String, position: Int): String = string.substring(position - 1)
 
-  def sum(x: Int, y: Int, b: Boolean): Int = {
-    if (b || (x == 0 || y == 0)) x + y else x * y
+  def sum(num1: Int, num2: Int, bool: Boolean): Int = {
+    if (bool || (num1 == 0 || num2 == 0)) num1 + num2 else num1 * num2
   }
 
-  def printMultiple(s: String, i: Int): Unit = for (_ <- 1 to i) println(s)
+  def printMultiple(string: String, amount: Int): Unit = for (_ <- 1 to amount) println(string)
 
-  def printSquare(s: String, i: Int): Unit = {
-    for (a <- 0 until i * i) {
-      if (a % i == 0) print("\n")
-      print(s)
+  def printSquare(string: String, amount: Int): Unit = {
+    for (counter <- 0 until amount * amount) {
+      if (counter % amount == 0) print("\n")
+      print(string)
     }
   }
 
-  def fizzBuzz(x: String, y: String, i: Int): Unit = {
-    for (a <- 1 to i) {
-      if (a % 15 == 0) println(x + y)
-      if (a % 3 == 0) println(x)
-      if (a % 5 == 0) println(y)
-      else println(a)
+  def fizzBuzz(string1: String, string2: String, max: Int): Unit = {
+    for (number <- 1 to max) {
+      if (number % 15 == 0) println(string1 + string2)
+      if (number % 3 == 0) println(string1)
+      if (number % 5 == 0) println(string2)
+      else println(number)
     }
   }
 
-  def fizzBuzzRecursion(x: String, y: String, i: Int): Unit = {
-    if (i != 0) {
-      if (i % 15 == 0) println(x + y)
-      if (i % 3 == 0) println(x)
-      if (i % 5 == 0) println(y)
-      else println(i)
-      fizzBuzzRecursion("Fizz", "Buzz", i - 1)
+  def fizzBuzzRecursion(string1: String, string2: String, number: Int): Unit = {
+    if (number != 0) {
+      if (number % 15 == 0) println(string1 + string2)
+      if (number % 3 == 0) println(string1)
+      if (number % 5 == 0) println(string2)
+      else println(number)
+      fizzBuzzRecursion("Fizz", "Buzz", number - 1)
     }
   }
 
-  def printSquareRecursion(s: String, i: Int, j: Int): Unit = {
-    if (i != 0) {
-      println(s"$s" * j)
-      printSquareRecursion(s, i - 1, j)
+  def printSquareRecursion(string: String, counter: Int, amount: Int): Unit = {
+    if (counter != 0) {
+      println(s"$string" * amount)
+      printSquareRecursion(string, counter - 1, amount)
     }
   }
 
-  def printMultipleRecursion(s: String, i: Int): Unit = {
-    if (i != 0) {
-      println(s)
-      printMultipleRecursion(s, i - 1)
+  def printMultipleRecursion(string: String, amount: Int): Unit = {
+    if (amount != 0) {
+      println(string)
+      printMultipleRecursion(string, amount - 1)
     }
   }
 
-  def sumPM(x: Int, y: Int, b: Boolean): Int = {
-    b match {
-      case _ if b || (x == 0 || y == 0) => x + y
-      case _ => x * y
+  def sumPM(num1: Int, num2: Int, bool: Boolean): Int = {
+    bool match {
+      case _ if bool || (num1 == 0 || num2 == 0) => num1 + num2
+      case _ => num1 * num2
     }
   }
 

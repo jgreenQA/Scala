@@ -21,7 +21,7 @@ object Main {
     p2.makeNewGrid(SIZE)
 
     p1PlaceShips(p1)
-    p2PlaceShips(p2)
+    p2PlaceShips(p2, SIZE)
 
     while (!playerHasLost) {
       p1.printGrid()
@@ -67,7 +67,7 @@ object Main {
   }
 
   def p1PlaceShips(p1: Player): Unit = {
-    while (p1.getTotalShipsRemaining() != 0) {
+    while (p1.getTotalShipsRemaining != 0) {
       p1.printGrid()
       println(s"\nPatrol Boats: $p1.getPatrolBoatsRemaining\nBattleships: $p1.getBattleshipsRemaining" +
         s"\nSubmarines: $p1.getSubmarinesRemaining\nDestroyers: $p1.getDestroyersRemaining" +
@@ -82,15 +82,15 @@ object Main {
     }
   }
 
-  def p2PlaceShips(p2: Player): Unit = {
-    while (p2.getTotalShipsRemaining() != 0) {
-      p2.placeShip("patrol boat", Random.nextInt(SIZE), Random.nextInt(SIZE), "right")
-      p2.placeShip("patrol boat", Random.nextInt(SIZE), Random.nextInt(SIZE), "up")
-      p2.placeShip("battleship", Random.nextInt(SIZE), Random.nextInt(SIZE), "left")
-      p2.placeShip("battleship", Random.nextInt(SIZE), Random.nextInt(SIZE), "down")
-      p2.placeShip("submarine", Random.nextInt(SIZE), Random.nextInt(SIZE), "left")
-      p2.placeShip("destroyer", Random.nextInt(SIZE), Random.nextInt(SIZE), "down")
-      p2.placeShip("carrier", Random.nextInt(SIZE), Random.nextInt(SIZE), "right")
+  def p2PlaceShips(p2: Player, size: Int): Unit = {
+    while (p2.getTotalShipsRemaining != 0) {
+      p2.placeShip("patrol boat", Random.nextInt(size), Random.nextInt(size), "right")
+      p2.placeShip("patrol boat", Random.nextInt(size), Random.nextInt(size), "up")
+      p2.placeShip("battleship", Random.nextInt(size), Random.nextInt(size), "left")
+      p2.placeShip("battleship", Random.nextInt(size), Random.nextInt(size), "down")
+      p2.placeShip("submarine", Random.nextInt(size), Random.nextInt(size), "left")
+      p2.placeShip("destroyer", Random.nextInt(size), Random.nextInt(size), "down")
+      p2.placeShip("carrier", Random.nextInt(size), Random.nextInt(size), "right")
     }
   }
 }

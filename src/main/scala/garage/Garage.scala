@@ -35,7 +35,7 @@ class Garage() {
   }
 
   def fixVehicle(v: Vehicle): Double = {
-    var t = 0
+    var t: Double = 0
     if (vehicles.contains(v)) {
       t = v.getTotalCost
       v.setFixed()

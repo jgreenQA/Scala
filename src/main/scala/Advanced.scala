@@ -15,33 +15,49 @@ object Advanced {
   }
 
   def getAnagrams(file: String): String = {
-    var (max, maxlen) = ("", 0)
-    var words = ArrayBuffer[String]()
+    var (max, maxLen) = ("", 0)
     val lines = (for (line <- fromFile(file, "utf-8").getLines()) yield line).toList
-    val anagrams = lines.map(l => (l.toList.sortWith(_<_), l) ).groupBy(x => x._1).map(els => (els._1, els._2.map(_._2))).toList.sortWith( _._2.size > _._2.size)
-    for (s <- anagrams) if (s._2.length > maxlen && s._2.head.length > max.length){ max = s._2.head; maxlen = s._2.length}
+
+    val anagrams = lines.map(line => (line.toList.sortWith(_<_), line))
+      .groupBy(group => group._1)
+      .map(elements => (elements._1, elements._2.map(_._2)))
+      .toList
+      .sortWith( _._2.size > _._2.size)
+
+    for (anagram <- anagrams) if (anagram._2.length > maxLen && anagram._2.head.length > max.length) {
+      max = anagram._2.head
+      maxLen = anagram._2.length
+    }
     max
   }
 
   def getPrimes(lower: Int = 1, upper: Int): Int = {
     var sum = 0
-    for (i <- lower to upper) if (!(2 +: (3 to Math.sqrt(i).toInt by 2) exists (i%_ == 0))) sum += 1
+    for (number <- lower to upper) if (!(2 +: (3 to Math.sqrt(number).toInt by 2) exists (number %_ == 0))) sum += 1
     sum
   }
 
-  def commonSubstring(x: String, y: String): String = {
-    val w = Array.ofDim[Int](x.length, y.length)
+  def commonSubstring(string1: String, string2: String): String = {
+    val matches = Array.ofDim[Int](string1.length, string2.length)
     var (max, pos) = (0, 0)
 
-    for (i <- 0 until x.length; j <- 0 until y.length if x.charAt(i) == y.charAt(j)) {
-      if (i == 0 || j == 0) w(i)(j) = 1 else w(i)(j) = w(i - 1)(j - 1) + 1
-      if (max < w(i)(j)) {max = w(i)(j); pos = i + 1}
+    for (xcounter <- 0 until string1.length; ycounter <- 0 until string2.length if string1.charAt(xcounter) == string2.charAt(ycounter)) {
+      if (xcounter == 0 || ycounter == 0) {
+        matches(xcounter)(ycounter) = 1
+      } else {
+        matches(xcounter)(ycounter) = matches(xcounter - 1)(ycounter - 1) + 1
+      }
+
+      if (max < matches(xcounter)(ycounter)) {
+        max = matches(xcounter)(ycounter)
+        pos = xcounter + 1
+      }
     }
-    if (pos > 0) x.substring(pos - max, pos) else ""
+    if (pos > 0) string1.substring(pos - max, pos) else ""
   }
 
-  def distance(a: String, b: String): Int = {
-    ((0 to b.length).toList /: a) ((prev, x) => (prev zip prev.tail zip b).scanLeft(prev.head + 1) {
+  def distance(string1: String, string2: String): Int = {
+    ((0 to string2.length).toList /: string1) ((prev, x) => (prev zip prev.tail zip string2).scanLeft(prev.head + 1) {
       case (h, ((d, v), y)) => min(min(h + 1, v + 1), d + (if (x == y) 0 else 1))
     }) last
   }

@@ -37,21 +37,34 @@ class Grid(s: Int) {
     println()
   }
 
+  def getSize: Int = size
+
   def placeShip(s: Ship, x: Int, y: Int, direction: String): Boolean = {
     if (grid(y)(x) == null) {
       if (direction.toLowerCase == "left")  for (i <- 0 to s.getSize) grid(y)(x - i) = s
       if (direction.toLowerCase == "right") for (i <- 0 to s.getSize) grid(y)(x + i) = s
       if (direction.toLowerCase == "up")    for (i <- 0 to s.getSize) grid(y + i)(x) = s
       if (direction.toLowerCase == "down")  for (i <- 0 to s.getSize) grid(y - i)(x) = s
+      true
     }
     false
   }
 
   def checkShot(x: Int, y: Int): Boolean = {
     this.lastx = x; this.lasty = y
-    if (grid(y)(x) != null) {grid(y)(x) = null; true}
+    if (grid(y)(x) != null) {
+      grid(y)(x) = null
+      true
+    }
     else false
   }
 
-  def hasLost: Boolean = for (i <- 0 to grid.length; j <- 0 to grid.length if grid(i)(j) != null) false
+  def hasLost: Boolean = {
+    for (i <- 0 to grid.length; j <- 0 to grid.length) {
+      if (grid(i)(j) != null) {
+        false
+      }
+    }
+    true
+  }
 }
