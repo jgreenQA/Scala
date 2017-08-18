@@ -1,4 +1,3 @@
-import scala.collection.mutable.ArrayBuffer
 import scala.io.Source.fromFile
 import scala.math.min
 
@@ -57,8 +56,8 @@ object Advanced {
   }
 
   def distance(string1: String, string2: String): Int = {
-    ((0 to string2.length).toList /: string1) ((prev, x) => (prev zip prev.tail zip string2).scanLeft(prev.head + 1) {
-      case (h, ((d, v), y)) => min(min(h + 1, v + 1), d + (if (x == y) 0 else 1))
+    ((0 to string2.length).toList /: string1) ((prev, curr) => (prev zip prev.tail zip string2).scanLeft(prev.head + 1) {
+      case (h, ((d, v), y)) => min(min(h + 1, v + 1), d + (if (curr == y) 0 else 1))
     }) last
   }
 }
