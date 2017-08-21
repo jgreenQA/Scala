@@ -46,32 +46,32 @@ object Numbers {
   }
 
   def toScale(num: String, scale: Char): String = {
-    var numToScale = num
-
-    if (scale == 'l') {
-      numToScale = numToScale.replaceAll("billion", "milliard")
-      numToScale = numToScale.replaceAll("trillion", "billion")
-      numToScale = numToScale.replaceAll("quadrillion", "billiard")
-      numToScale = numToScale.replaceAll("quintillion", "trillion")
+    val numToScale: String = if (scale == 'l') {
+      num.replaceAll("billion", "milliard")
+        .replaceAll("trillion", "billion")
+        .replaceAll("quadrillion", "billiard")
+        .replaceAll("quintillion", "trillion")
     } else if (scale == 's') {
-      numToScale = numToScale.replaceAll("trillion", "quintillion")
-      numToScale = numToScale.replaceAll("billiard", "quadrillion")
-      numToScale = numToScale.replaceAll("billion", "trillion")
-      numToScale = numToScale.replaceAll("milliard", "billion")
-    }
+      num.replaceAll("trillion", "quintillion")
+        .replaceAll("billiard", "quadrillion")
+        .replaceAll("billion", "trillion")
+        .replaceAll("milliard", "billion")
+    } else ""
     numToScale
   }
 
   def getScaleName(num: Long): String = {
     val sScale = Array("quintillion", "quadrillion", "trillion", "billion", "million", "thousand", "hundred")
 
-    if (num >= 1000000000000000000L) s"${getNum(num / 1000000000000000000L)} ${sScale(0)} ${getNum(num % 1000000000000000000L)}"
-    else if (num >= 100000000000000L) s"${getNum(num / 100000000000000L)} ${sScale(1)} ${getNum(num % 100000000000000L)}"
-    else if (num >= 1000000000000L) s"${getNum(num / 1000000000000L)} ${sScale(2)} ${getNum(num % 1000000000000L)}"
-    else if (num >= 1000000000) s"${getNum(num / 1000000000)} ${sScale(3)} ${getNum(num % 1000000000)}"
-    else if (num >= 1000000) s"${getNum(num / 1000000)} ${sScale(4)} ${getNum(num % 1000000)}"
-    else if (num >= 1000) s"${getNum(num / 1000)} ${sScale(5)} ${getNum(num % 1000)}"
-    else if (num >= 100) s"${getNum(num / 100)} ${sScale(6)} ${getNum(num % 100)}"
-    else ""
+    num.toString.length match {
+      case length if length >= 19 => s"${getNum(num / 1000000000000000000L)} ${sScale(0)} ${getNum(num % 1000000000000000000L)}"
+      case length if length >= 15 => s"${getNum(num / 100000000000000L)} ${sScale(1)} ${getNum(num % 100000000000000L)}"
+      case length if length >= 13 => s"${getNum(num / 1000000000000L)} ${sScale(2)} ${getNum(num % 1000000000000L)}"
+      case length if length >= 10 => s"${getNum(num / 1000000000)} ${sScale(3)} ${getNum(num % 1000000000)}"
+      case length if length >= 7 => s"${getNum(num / 1000000)} ${sScale(4)} ${getNum(num % 1000000)}"
+      case length if length >= 4 => s"${getNum(num / 1000)} ${sScale(5)} ${getNum(num % 1000)}"
+      case length if length >= 3 => s"${getNum(num / 100)} ${sScale(6)} ${getNum(num % 100)}"
+      case _ => ""
+    }
   }
 }
