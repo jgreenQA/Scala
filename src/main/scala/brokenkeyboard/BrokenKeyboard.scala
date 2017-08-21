@@ -5,17 +5,23 @@ import scala.io.StdIn.readLine
 object BrokenKeyboard {
   def main(args: Array[String]): Unit = {
     val keys = ArrayBuffer[String]()
-    for (_<- 1 to Integer.parseInt(readLine("Enter amount: "))) keys += readLine("Enter keys: ")
-    for (a <- keys; b <- getWords(keys)) println(s"$a = $b")
+    for (_ <- 1 to Integer.parseInt(readLine("Enter amount: "))) keys += readLine("Enter keys: ")
+    for (key <- keys; word <- getWords(keys)) println(s"$key = $word")
   }
 
   def getWords(keys: ArrayBuffer[String]): ArrayBuffer[String] = {
     val lines = (for (line <- fromFile("words.txt", "utf-8").getLines()) yield line).toList
     var validWords = ArrayBuffer[String]()
 
-    for (b <- keys) {
+    for (key <- keys) {
       var word = ""
-      for (a <- lines) if (b.distinct.sortWith(_<_) contains a.distinct.sortWith(_<_)) if (a.length > word.length) word = a
+      for (line <- lines) {
+        if (key.distinct.sortWith(_<_) contains line.distinct.sortWith(_<_)) {
+          if (line.length > word.length) {
+            word = line
+          }
+        }
+      }
       validWords += word
     }
     validWords
