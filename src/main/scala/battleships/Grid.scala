@@ -2,52 +2,56 @@ package battleships
 
 import battleships.Ship.Ship
 
-class Grid(s: Int) {
-  val grid = Array.ofDim[Ship](s, s)
-  val size = s
+class Grid(sizeIn: Int) {
+  val grid = Array.ofDim[Ship](sizeIn, sizeIn)
+  val size = sizeIn
 
   var lastx: Int = -1
   var lasty: Int = -1
 
   def printGrid(): Unit = {
-    var s: Ship = null
+    var ship: Ship = null
     System.out.println()
-    for (i <- 0 to size) {
+    for (i <- 0 until size) {
       if (i == 0) {
         print("  ")
-        for (k <- 0 to size) {
+        for (k <- 0 until size) {
           print(s"$k ")
         }
         println()
       }
 
-      for (j <- 0 to size) {
-        s = grid(i)(j)
-        if (j == 0) print(s"$i ")
-        if (i == lasty && j == lastx) print("X ")
-        if (s == null)                print("~ ")
-        if (s == Ship.PATROLBOAT)     print("P ")
-        if (s == Ship.BATTLESHIP)     print("B ")
-        if (s == Ship.SUBMARINE)      print("S ")
-        if (s == Ship.DESTROYER)      print("D ")
-        if (s == Ship.CARRIER)        print("C ")
+      for (j <- 0 until size) {
+        ship = grid(i)(j)
+        if (j == 0)                      print(s"$i ")
+        if (i == lasty && j == lastx)    print("X ")
+        else printShip(ship)
       }
       println()
     }
     println()
   }
 
+  def printShip(ship: Ship): Unit = {
+    if      (ship == Ship.PATROLBOAT)     print("P ")
+    else if (ship == Ship.BATTLESHIP)     print("B ")
+    else if (ship == Ship.SUBMARINE)      print("S ")
+    else if (ship == Ship.DESTROYER)      print("D ")
+    else if (ship == Ship.CARRIER)        print("C ")
+    else                                  print("~ ")
+  }
+
   def getSize: Int = size
 
-  def placeShip(s: Ship, x: Int, y: Int, direction: String): Boolean = {
+  def placeShip(ship: Ship, x: Int, y: Int, direction: String): Boolean = {
     if (grid(y)(x) == null) {
-      if (direction.toLowerCase == "left")  for (i <- 0 to s.getSize) grid(y)(x - i) = s
-      if (direction.toLowerCase == "right") for (i <- 0 to s.getSize) grid(y)(x + i) = s
-      if (direction.toLowerCase == "up")    for (i <- 0 to s.getSize) grid(y + i)(x) = s
-      if (direction.toLowerCase == "down")  for (i <- 0 to s.getSize) grid(y - i)(x) = s
+      if (direction.toLowerCase == "left")  for (i <- 0 to ship.getSize) grid(y)(x - i) = ship
+      if (direction.toLowerCase == "right") for (i <- 0 to ship.getSize) grid(y)(x + i) = ship
+      if (direction.toLowerCase == "up")    for (i <- 0 to ship.getSize) grid(y + i)(x) = ship
+      if (direction.toLowerCase == "down")  for (i <- 0 to ship.getSize) grid(y - i)(x) = ship
       true
     }
-    false
+    else false
   }
 
   def checkShot(x: Int, y: Int): Boolean = {

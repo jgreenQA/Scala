@@ -1,8 +1,8 @@
 package battleships
 
-class Player(n: String) {
+class Player(n: String, size: Int) {
   val name: String = n
-  var grid: Grid
+  var grid: Grid = new Grid(size)
 
   var patrolBoatsRemaining: Int = Ship.PATROLBOAT.getAmount
   var battleshipsRemaining: Int = Ship.BATTLESHIP.getAmount
@@ -14,11 +14,9 @@ class Player(n: String) {
 
   def getGrid: Grid = grid
 
-  def makeNewGrid(size: Int): Unit = grid = new Grid(size)
-
   def getName: String = name
 
-  def makeShotAt(p: Player, x: Int, y: Int): Boolean = p.getGrid.checkShot(x, y)
+  def makeShotAt(player: Player, x: Int, y: Int): Boolean = player.getGrid.checkShot(x, y)
 
   def placeShip(s: String, x: Int, y: Int, direction: String): Boolean = {
     var shipName = ""

@@ -7,76 +7,42 @@ object Main {
   def main(args: Array[String]): Unit = {
     val SIZE: Int = 10
     var playerHasLost: Boolean = false
-    var playerHasAnotherShot: Boolean = false
-    var x: Int = 0
-    var y: Int = 0
     var winner: String = ""
 
     println("-- SETUP --\n")
 
-    val p1 = new Player(readLine("Enter your name: "))
-    val p2 = new Player("Computer")
-
-    p1.makeNewGrid(SIZE)
-    p2.makeNewGrid(SIZE)
+    val p1 = new Player(readLine("Enter your name: "), SIZE)
+    val p2 = new Player("Computer", SIZE)
 
     p1PlaceShips(p1)
     p2PlaceShips(p2, SIZE)
 
     while (!playerHasLost) {
       p1.printGrid()
-      playerHasAnotherShot = true
+
       println(s"${p1.getName}'s turn!")
+      playerHasLost = p1TakeTurn(p1, p2)
 
-      while (playerHasAnotherShot) {
-        println("Enter your coordinates: ")
-        x = Integer.parseInt(readLine("x: "))
-        y = Integer.parseInt(readLine("y: "))
-        if (p1.makeShotAt(p2, x, y)) println("\nHit!")
-        else {
-          System.out.println("\nMiss!")
-          playerHasAnotherShot = false
-        }
-        playerHasLost = p2.hasLost
-      }
-
-      playerHasAnotherShot = true
       println(s"${p2.getName}'s turn!")
-
-      while (playerHasAnotherShot) {
-        x = Random.nextInt(SIZE)
-        y = Random.nextInt(SIZE)
-        println(s"${p2.getName} chose:\nx: $x\ny: $y")
-        if (p2.makeShotAt(p1, x, y)) println("\nHit!")
-        else {
-          System.out.println("\nMiss!")
-          playerHasAnotherShot = false
-        }
-      }
-
-      if (p1.hasLost) {
-        winner = p2.getName
-        playerHasLost = true
-      }
-      else if (p2.hasLost) {
-        winner = p2.getName
-        playerHasLost = true
-      }
-      println(s"\nGame Over!\n$winner wins!")
+      playerHasLost = p2TakeTurn(p1, p2, SIZE)
     }
+
+    if (p1.hasLost) winner = p2.getName
+    else if (p2.hasLost) winner = p1.getName
+    println(s"\nGame Over!\n$winner wins!")
   }
 
   def p1PlaceShips(p1: Player): Unit = {
     while (p1.getTotalShipsRemaining != 0) {
       p1.printGrid()
-      println(s"\nPatrol Boats: $p1.getPatrolBoatsRemaining\nBattleships: $p1.getBattleshipsRemaining" +
-        s"\nSubmarines: $p1.getSubmarinesRemaining\nDestroyers: $p1.getDestroyersRemaining" +
-        s"\nCarriers: $p1.getCarriersRemaining")
+      println(s"\n(P)atrol Boats: ${p1.getPatrolBoatsRemaining}\n(B)attleships: ${p1.getBattleshipsRemaining}" +
+        s"\n(S)ubmarines: ${p1.getSubmarinesRemaining}\n(D)estroyers: ${p1.getDestroyersRemaining}" +
+        s"\n(C)arriers: ${p1.getCarriersRemaining}")
 
-      val ship        = readLine("Enter the ship you want to place: ")
-      val x           = Integer.parseInt(readLine("x: "))
-      val y           = Integer.parseInt(readLine("y: "))
-      val direction   = readLine("direction: ")
+      val ship = readLine("Enter the ship you want to place: ")
+      val x = Integer.parseInt(readLine("x: "))
+      val y = Integer.parseInt(readLine("y: "))
+      val direction = readLine("direction: ")
 
       if (!p1.placeShip(ship, x, y, direction)) println("Cannot place ship")
     }
@@ -92,5 +58,37 @@ object Main {
       p2.placeShip("destroyer", Random.nextInt(size), Random.nextInt(size), "down")
       p2.placeShip("carrier", Random.nextInt(size), Random.nextInt(size), "right")
     }
+  }
+
+  def p1TakeTurn(p1: Player, p2: Player): Boolean = {
+    var playerHasAnotherShot = true
+
+    while (playerHasAnotherShot) {
+      println("Enter your coordinates: ")
+      val x = Integer.parseInt(readLine("x: "))
+      val y = Integer.parseInt(readLine("y: "))
+      if (p1.makeShotAt(p2, x, y)) println("\nHit!")
+      else {
+        println("\nMiss!")
+        playerHasAnotherShot = false
+      }
+    }
+    p2.hasLost
+  }
+
+  def p2TakeTurn(p1: Player, p2: Player, size: Int): Boolean = {
+    var playerHasAnotherShot = true
+
+    while (playerHasAnotherShot) {
+      val x = Random.nextInt(size)
+      val y = Random.nextInt(size)
+      println(s"${p2.getName} chose:\nx: $x\ny: $y")
+      if (p2.makeShotAt(p1, x, y)) println("\nHit!")
+      else {
+        println("\nMiss!")
+        playerHasAnotherShot = false
+      }
+    }
+    p1.hasLost
   }
 }

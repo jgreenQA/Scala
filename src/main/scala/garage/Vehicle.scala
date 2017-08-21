@@ -11,11 +11,11 @@ class Vehicle(makein: String, modelin: String) {
   var model: String = modelin
   var bills = 0
 
-  def setBill(p: Int): Unit = bills = p
+  def setBill(billsIn: Int): Unit = bills = billsIn
 
-  def setMake(m: String): Unit = make = m
+  def setMake(makein: String): Unit = make = makein
 
-  def setModel(m: String): Unit = model = m
+  def setModel(modelin: String): Unit = model = modelin
 
   def getBill: Int = bills
 

@@ -1,19 +1,19 @@
 package garage
 
-class Part(p: Double, b: Boolean, t: Int) {
-  var price = p
-  var broken = b
-  var time = t
+class Part(priceIn: Double, brokenIn: Boolean, timeIn: Int) {
+  var price = priceIn
+  var broken = brokenIn
+  var time = timeIn
 
   def getPrice: Double = price
 
-  def setPrice(p: Double): Unit = price = p
+  def setPrice(priceIn: Double): Unit = price = priceIn
 
   def getFixCost: Double = if (broken) price else 0
 
   def isBroken: Boolean = broken
 
-  def setBroken(b: Boolean): Unit = broken = b
+  def setBroken(brokenIn: Boolean): Unit = broken = brokenIn
 
   def getTime: Int = time
 

@@ -5,7 +5,7 @@ object Advanced {
   def main(args: Array[String]): Unit = {
     println(getAnagrams("words.txt"))
 
-    println(getPrimes(1, 3000000))
+    println(getPrimes(1, 1000))
     println(getPrimes(1, 20000000))
 
     println(commonSubstring("salad", "ladder"))

@@ -6,7 +6,9 @@ object Numbers {
   def main(args: Array[String]): Unit = {
     val num = Integer.parseInt(readLine("Enter number: ")).toLong
     val scale = readLine("Enter scale: ").toLowerCase.charAt(0)
-    println(s"\n${getNum(num, scale)}")
+
+    if (scale != 's' && scale != 'l') println(s"\nShort scale: ${getNum(num)}\nLong scale: ${getNum(num, 'l')}")
+    else println(getNum(num, scale))
   }
 
   def getNum(num: Long, scale: Char = 's'): String = {

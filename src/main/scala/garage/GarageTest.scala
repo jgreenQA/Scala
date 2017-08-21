@@ -4,16 +4,20 @@ import scala.util.Random
 
 object GarageTest {
   def main(args: Array[String]): Unit = {
-    val g = new Garage()
+    val garage = new Garage()
 
-    g.addEmployee(new Employee("John", "Smith", Random.nextInt(5) + 1))
-    g.addEmployee(new Employee("Fred", "Jones", Random.nextInt(5) + 1))
-    g.addEmployee(new Employee("Mike", "Deere", Random.nextInt(5) + 1))
-    g.addEmployee(new Employee("Sian", "Davis", Random.nextInt(5) + 1))
+    val myCar = new Car("Toyota", "Yaris")
 
-    g.open
+    garage.addEmployee(new Employee("John", "Smith", Random.nextInt(5) + 1))
+    garage.addEmployee(new Employee("Fred", "Jones", Random.nextInt(5) + 1))
+    garage.addEmployee(new Employee("Mike", "Deere", Random.nextInt(5) + 1))
+    garage.addEmployee(new Employee("Sian", "Davis", Random.nextInt(5) + 1))
 
-    println(g.addVehicle(new Car("Toyota", "Yaris")))
-    println(g.getVehicleByID(0).getMake)
+    garage.open
+
+    println(garage.addVehicle(myCar))
+    println(garage.getVehicleByID(0).getMake)
+
+    println(garage.fixVehicle(myCar))
   }
 }
