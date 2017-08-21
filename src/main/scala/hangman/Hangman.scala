@@ -68,6 +68,6 @@ object Hangman {
     guesses.foreach(guess => print(s"$guess,"))
     println(s"\nRemaining Incorrect Guesses: $guessesAmount")
     println(formatWord(word, guesses))
-    if (guessesAmount == 0) println(s"Life is cruel. You are dead. $word killed you")
+    if (guessesAmount == 0) println(s"Life is cruel. You are dead. ${word.toUpperCase} killed you")
   }
 }

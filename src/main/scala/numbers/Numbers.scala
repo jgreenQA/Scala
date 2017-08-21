@@ -1,43 +1,28 @@
 package numbers
 
 import scala.io.StdIn.readLine
+import scala.io.StdIn.readLong
 
 object Numbers {
   def main(args: Array[String]): Unit = {
-    val num = Integer.parseInt(readLine("Enter number: ")).toLong
+    print("Enter number: ")
+    val num = readLong()
     val scale = readLine("Enter scale: ").toLowerCase.charAt(0)
 
-    if (scale != 's' && scale != 'l') println(s"\nShort scale: ${getNum(num)}\nLong scale: ${getNum(num, 'l')}")
-    else println(getNum(num, scale))
+    if (scale != 's' && scale != 'l') println(s"\nShort scale: ${getNum(num)}\nLong scale: ${toScale(getNum(num), 'l')}")
+    else println(getNum(num))
   }
 
-  def getNum(num: Long, scale: Char = 's'): String = {
-    val sScale = Array("quintillion", "quadrillion", "trillion", "billion", "million", "thousand", "hundred")
-    val lScale = Array("trillion", "billiard", "billion", "milliard", "million", "thousand", "hundred")
-
+  def getNum(num: Long): String = {
     if (num < 0) s"minus ${getNum(-num)}"
 
-    else if (scale == 's' && num >= 1000000000000000000L) s"${getNum(num / 1000000000000000000L, scale)} ${sScale(0)} ${getNum(num % 1000000000000000000L, scale)}"
-    else if (scale == 's' && num >= 100000000000000L) s"${getNum(num / 100000000000000L, scale)} ${sScale(1)} ${getNum(num % 100000000000000L, scale)}"
-    else if (scale == 's' && num >= 1000000000000L) s"${getNum(num / 1000000000000L, scale)} ${sScale(2)} ${getNum(num % 1000000000000L, scale)}"
-    else if (scale == 's' && num >= 1000000000) s"${getNum(num / 1000000000, scale)} ${sScale(3)} ${getNum(num % 1000000000, scale)}"
-    else if (scale == 's' && num >= 1000000) s"${getNum(num / 1000000, scale)} ${sScale(4)} ${getNum(num % 1000000, scale)}"
-    else if (scale == 's' && num >= 1000) s"${getNum(num / 1000, scale)} ${sScale(5)} ${getNum(num % 1000, scale)}"
-    else if (scale == 's' && num >= 100) s"${getNum(num / 100, scale)} ${sScale(6)} ${getNum(num % 100, scale)}"
-
-    else if (scale == 'l' && num >= 1000000000000000000L) s"${getNum(num / 1000000000000000000L, scale)} ${lScale(0)} ${getNum(num % 1000000000000000000L, scale)}"
-    else if (scale == 'l' && num >= 100000000000000L) s"${getNum(num / 100000000000000L, scale)} ${lScale(1)} ${getNum(num % 100000000000000L, scale)}"
-    else if (scale == 'l' && num >= 1000000000000L) s"${getNum(num / 1000000000000L, scale)} ${lScale(2)} ${getNum(num % 1000000000000L, scale)}"
-    else if (scale == 'l' && num >= 1000000000) s"${getNum(num / 1000000000, scale)} ${lScale(3)} ${getNum(num % 1000000000, scale)}"
-    else if (scale == 'l' && num >= 1000000) s"${getNum(num / 1000000, scale)} ${lScale(4)} ${getNum(num % 1000000, scale)}"
-    else if (scale == 'l' && num >= 1000) s"${getNum(num / 1000, scale)} ${lScale(5)} ${getNum(num % 1000, scale)}"
-    else if (scale == 'l' && num >= 100) s"${getNum(num / 100, scale)} ${lScale(6)} ${getNum(num % 100, scale)}"
+    else if (num >= 100) getScaleName(num)
 
     else if (num >= 20) num / 10 match {
-      case 2    => s"twenty ${getNum(num % 10, scale)}"
-      case 3    => s"thirty ${getNum(num % 10, scale)}"
-      case 5    => s"fifty ${getNum(num % 10, scale)}"
-      case n@_  => s"${getNum(n, scale).stripSuffix("t")}ty ${getNum(num % 10, scale)}"
+      case 2    => s"twenty ${getNum(num % 10)}"
+      case 3    => s"thirty ${getNum(num % 10)}"
+      case 5    => s"fifty ${getNum(num % 10)}"
+      case n@_  => s"${getNum(n).stripSuffix("t")}ty ${getNum(num % 10)}"
     }
 
     else num match {
@@ -56,7 +41,37 @@ object Numbers {
       case 12   => "twelve"
       case 13   => "thirteen"
       case 15   => "fifteen";
-      case n@_  => s"${getNum(n - 10, scale).stripSuffix("t")}teen"
+      case n@_  => s"${getNum(n - 10).stripSuffix("t")}teen"
     }
+  }
+
+  def toScale(num: String, scale: Char): String = {
+    var numToScale = num
+
+    if (scale == 'l') {
+      numToScale = numToScale.replaceAll("billion", "milliard")
+      numToScale = numToScale.replaceAll("trillion", "billion")
+      numToScale = numToScale.replaceAll("quadrillion", "billiard")
+      numToScale = numToScale.replaceAll("quintillion", "trillion")
+    } else if (scale == 's') {
+      numToScale = numToScale.replaceAll("trillion", "quintillion")
+      numToScale = numToScale.replaceAll("billiard", "quadrillion")
+      numToScale = numToScale.replaceAll("billion", "trillion")
+      numToScale = numToScale.replaceAll("milliard", "billion")
+    }
+    numToScale
+  }
+
+  def getScaleName(num: Long): String = {
+    val sScale = Array("quintillion", "quadrillion", "trillion", "billion", "million", "thousand", "hundred")
+
+    if (num >= 1000000000000000000L) s"${getNum(num / 1000000000000000000L)} ${sScale(0)} ${getNum(num % 1000000000000000000L)}"
+    else if (num >= 100000000000000L) s"${getNum(num / 100000000000000L)} ${sScale(1)} ${getNum(num % 100000000000000L)}"
+    else if (num >= 1000000000000L) s"${getNum(num / 1000000000000L)} ${sScale(2)} ${getNum(num % 1000000000000L)}"
+    else if (num >= 1000000000) s"${getNum(num / 1000000000)} ${sScale(3)} ${getNum(num % 1000000000)}"
+    else if (num >= 1000000) s"${getNum(num / 1000000)} ${sScale(4)} ${getNum(num % 1000000)}"
+    else if (num >= 1000) s"${getNum(num / 1000)} ${sScale(5)} ${getNum(num % 1000)}"
+    else if (num >= 100) s"${getNum(num / 100)} ${sScale(6)} ${getNum(num % 100)}"
+    else ""
   }
 }
