@@ -1,17 +1,33 @@
 package rockpaperscissors
 
 object Move {
-  sealed abstract class Move(val name: String, val wins: Move, val loses: Move) {
+  sealed abstract class Move(val name: String, val wins: List[String], val loses: List[String]) {
     def getName: String = name
 
-    def getWins: Move = wins
+    def getWins: List[String] = wins
 
-    def getLoses: Move = loses
+    def getLoses: List[String] = loses
+
+    def beats(oppMove: Move): Boolean = {
+      oppMove.getName match {
+        case m if this.getWins contains m => true
+        case m if this.getLoses contains m => false
+        case _ => false
+      }
+    }
 
     override def toString: String = name
   }
 
-  case object ROCK      extends Move("rock", Move.SCISSORS, Move.PAPER)
-  case object PAPER     extends Move("paper", Move.ROCK, Move.SCISSORS)
-  case object SCISSORS  extends Move("scissors", Move.PAPER, Move.ROCK)
+  case object ROCK      extends Move("rock", List("scissors", "lizard"), List("paper", "spock"))
+  case object PAPER     extends Move("paper", List("rock", "spock"), List("scissors", "lizard"))
+  case object SCISSORS  extends Move("scissors", List("paper", "lizard"), List("rock", "spock"))
+  case object LIZARD    extends Move("lizard", List("paper", "spock"), List("rock", "scissors"))
+  case object SPOCK     extends Move("spock", List("scissors", "rock"), List("lizard", "paper"))
+
+  /*case object ROCK      extends Move("rock", List(Move.SCISSORS, Move.LIZARD), List(Move.PAPER, Move.SPOCK))
+  case object PAPER     extends Move("paper", List(Move.ROCK, Move.SPOCK), List(Move.SCISSORS, Move.LIZARD))
+  case object SCISSORS  extends Move("scissors", List(Move.PAPER, Move.LIZARD), List(Move.ROCK, Move.SPOCK))
+  case object LIZARD    extends Move("lizard", List(Move.PAPER, Move.SPOCK), List(Move.ROCK, Move.SCISSORS))
+  case object SPOCK     extends Move("spock", List(Move.SCISSORS, Move.ROCK), List(Move.LIZARD, Move.PAPER))*/
 }
