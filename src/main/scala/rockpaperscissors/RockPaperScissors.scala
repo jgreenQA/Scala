@@ -21,7 +21,7 @@ object RockPaperScissors {
       for (i <- 1 until playersAmount) players += new Player(s"AI$i")
     }
 
-    while (players.length > 1) { //for (i <- 1 to rounds if players.length > 1) {
+    while (players.length > 1 || currRound <= rounds) { //for (i <- 1 to rounds if players.length > 1) {
       println(s"\nRound $currRound:")
 
       chooseMoves(players)
@@ -48,10 +48,12 @@ object RockPaperScissors {
   def chooseMoves(players: ArrayBuffer[Player]): Unit = {
     val moves = Array('r', 'p', 's', 'l', 'k')
 
+    players.foreach(p => println(p.getLastMove))
+
     for (player <- players) {
       var moveChar = ' '
       if (player.getName.startsWith("AI") && players.length > 2) moveChar = Random.shuffle(moves.toList).head
-      else if (player.getName.startsWith("AI") && players.length == 2) println(s"Test: ${players.head.lastMove}") //moveChar = Random.shuffle(players.head.getLastMove.getLoses).head.charAt(0)
+      else if (player.getName.startsWith("AI") && players.length == 2) moveChar = Random.shuffle(players.head.getLastMove.getLoses).head.charAt(0)
       else moveChar = readLine("(R)ock, (P)aper, (S)cissors, (L)izard or Spoc(K)?\nEnter move: ").toLowerCase.charAt(0)
 
       moveChar match {

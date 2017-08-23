@@ -5,7 +5,7 @@ import rockpaperscissors.Move.Move
 class Player(nameIn: String) {
   val name: String = nameIn
   var lastMove: Move = Move.ROCK
-  var currMove: Move = _
+  var currMove: Move = Move.ROCK
 
   def getName: String = name
 
