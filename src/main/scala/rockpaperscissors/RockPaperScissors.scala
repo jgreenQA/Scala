@@ -21,7 +21,7 @@ object RockPaperScissors {
       for (i <- 1 until playersAmount) players += new Player(s"AI$i")
     }
 
-    while (players.length > 1 || currRound <= rounds) { //for (i <- 1 to rounds if players.length > 1) {
+    while (players.length > 1) {
       println(s"\nRound $currRound:")
 
       chooseMoves(players)
@@ -29,8 +29,6 @@ object RockPaperScissors {
       players.foreach(p => println(s"${p.getName} chose: ${p.getCurrMove}"))
 
       players = determineWinner(players)
-
-      //println(s"\nAmount of players: ${players.length}")
 
       if (players.length == 1) {
         println(s"\n${players.head.getName} wins!")
@@ -77,21 +75,11 @@ object RockPaperScissors {
       winningPlayers = players
     } else {
       for (comparisonPlayer <- players; currentPlayer <- players) {
-        //println(s"\nComp = ${comparisonPlayer.getName} : ${comparisonPlayer.getCurrMove}")
-        //println(s"Curr = ${currentPlayer.getName} : ${currentPlayer.getCurrMove}")
-        //println(comparisonPlayer.getCurrMove.beats(currentPlayer.getCurrMove))
         if (comparisonPlayer.getCurrMove beats currentPlayer.getCurrMove) {
           winningPlayers += comparisonPlayer
-          //println(s"Adding ${comparisonPlayer.getName}")
         }
       }
     }
-    //println("\nAll Winners")
-    //winningPlayers.foreach(p => println(p.getName))
-
-    //println("\nDistinct Winners")
-    //winningPlayers.distinct.foreach(p => println(p.getName))
-
     winningPlayers.distinct
   }
 }

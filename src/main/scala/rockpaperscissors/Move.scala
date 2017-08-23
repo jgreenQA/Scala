@@ -24,10 +24,4 @@ object Move {
   case object SCISSORS  extends Move("scissors", List("paper", "lizard"), List("rock", "spock"))
   case object LIZARD    extends Move("lizard", List("paper", "spock"), List("rock", "scissors"))
   case object SPOCK     extends Move("spock", List("scissors", "rock"), List("lizard", "paper"))
-
-  /*case object ROCK      extends Move("rock", List(Move.SCISSORS, Move.LIZARD), List(Move.PAPER, Move.SPOCK))
-  case object PAPER     extends Move("paper", List(Move.ROCK, Move.SPOCK), List(Move.SCISSORS, Move.LIZARD))
-  case object SCISSORS  extends Move("scissors", List(Move.PAPER, Move.LIZARD), List(Move.ROCK, Move.SPOCK))
-  case object LIZARD    extends Move("lizard", List(Move.PAPER, Move.SPOCK), List(Move.ROCK, Move.SCISSORS))
-  case object SPOCK     extends Move("spock", List(Move.SCISSORS, Move.ROCK), List(Move.LIZARD, Move.PAPER))*/
 }
