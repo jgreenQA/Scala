@@ -5,7 +5,7 @@ object Bottles {
     println(getLyrics(99))
   }
 
-  def getLyrics(bottles: Int): String = {
+  def getLyrics(bottles: Int = 99): String = {
     if (bottles != 0) {
       s"\n\n$bottles bottles of beer on the wall, $bottles bottles of beer." +
         s"\nTake one down and pass it around, ${bottles-1} bottles of beer on the wall. ${getLyrics(bottles-1)}"
