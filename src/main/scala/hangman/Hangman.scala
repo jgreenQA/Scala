@@ -10,12 +10,13 @@ object Hangman {
     var guessesAmount = 6
     var guesses = ListBuffer[Char]()
     val word = getWord
+    var gameOver = false
 
     println(formatWord(word, guesses))
-    while (guessesAmount > 0) {
+    while (!gameOver) {
       guesses += readLine("Enter guess: ").charAt(0)
       if (!(word contains guesses.last)) guessesAmount -= 1
-      drawGame(word, guessesAmount, guesses)
+      gameOver = drawGame(word, guessesAmount, guesses)
     }
   }
 
@@ -62,12 +63,19 @@ object Hangman {
     }
   }
 
-  def drawGame(word: String, guessesAmount: Int, guesses: ListBuffer[Char]): Unit = {
+  def drawGame(word: String, guessesAmount: Int, guesses: ListBuffer[Char]): Boolean = {
     drawGallows(guessesAmount)
     print(s"\n\nGuesses: ")
     guesses.foreach(guess => print(s"$guess,"))
     println(s"\nRemaining Incorrect Guesses: $guessesAmount")
     println(formatWord(word, guesses))
-    if (guessesAmount == 0) println(s"Life is cruel. You are dead. ${word.toUpperCase} killed you")
+
+    if (!formatWord(word, guesses).contains("_")) {
+      println(s"You won!")
+      true
+    } else if (guessesAmount == 0) {
+      println(s"Life is cruel. You are dead. ${word.toUpperCase} killed you")
+      true
+    } else false
   }
 }
